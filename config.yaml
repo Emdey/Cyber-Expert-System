@@ -1,0 +1,20 @@
+cookie:
+  expiry_days: 30
+  key: random_signature_key
+  name: some_cookie_name
+credentials:
+  usernames:
+    admin:
+      email: admin@gmail.com
+      name: Admin User
+      password: $2b$12$evU.Zu5xS8JM4yWMTzdxDe4Fi964Hk64TaXVB3uu8Pr9GJsgeLwuy
+    oluwadamilola:
+      email: addeysamuel2@gmail.com
+      first_name: Oluwadamilola
+      last_name: Samuel
+      logged_in: false
+      password: $2b$12$bgcyTZHu.YcSQxQpL0I.jO19x.JduvhrjLlnLYq8U3zuvsXsmBPUe
+      password_hint: Oluwadamilola is my name and i rock
+      roles: null
+preauthorized:
+  emails: []
