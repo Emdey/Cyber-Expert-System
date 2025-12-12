@@ -11,6 +11,84 @@ from modules.vuln_rules import check_vulnerabilities
 # --- PAGE CONFIGURATION ---
 st.set_page_config(page_title="Cyber-Expert-System", page_icon="🛡️", layout="wide")
 
+# --- CUSTOM THEME FUNCTION (Midnight Edition) ---
+def load_glass_theme():
+    """
+    Injects CSS to create a Dark Glass + Midnight Blue look.
+    """
+    st.markdown("""
+    <style>
+        /* 1. Main Background - Midnight Blue to Deep Navy (NO LIGHT BLUE) */
+        .stApp {
+            background: linear-gradient(180deg, #020024 0%, #0a0a2e 50%, #000000 100%);
+            background-attachment: fixed;
+            color: #ffffff;
+        }
+
+        /* 2. Sidebar - Dark Frosted Glass */
+        [data-testid="stSidebar"] {
+            background-color: rgba(5, 5, 20, 0.6); 
+            backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* 3. The "Real Glass" Card Effect */
+        [data-testid="stMetric"], 
+        div[data-testid="stVerticalBlock"] > div > div {
+            background: rgba(255, 255, 255, 0.03); /* Extremely subtle fill */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); /* Deep shadow */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white edge */
+            padding: 15px;
+        }
+
+        /* 4. Inputs - Deep Dark */
+        .stTextInput > div > div > input {
+            background-color: rgba(0, 0, 0, 0.6) !important;
+            color: #00d4ff !important;
+            border: 1px solid #334455 !important;
+            border-radius: 6px;
+        }
+        .stTextInput > div > div > input:focus {
+            border: 1px solid #00d4ff !important;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        /* 5. Buttons - Stealth Neon */
+        .stButton > button {
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid #00d4ff;
+            color: #00d4ff;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .stButton > button:hover {
+            background: #00d4ff;
+            color: #000000;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
+        }
+
+        /* 6. Text Styling */
+        h1, h2, h3 {
+            color: #ffffff !important;
+            font-family: 'Helvetica Neue', sans-serif;
+            letter-spacing: 1px;
+        }
+        p, .stMarkdown, .stCaption {
+            color: #b0c4de !important; /* Steel Blue text */
+        }
+        
+        /* 7. Chat Box */
+        .stChatInputContainer {
+            background-color: transparent !important;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
 # --- 1. LOAD USER DATABASE ---
 try:
     with open('config.yaml') as file:
@@ -49,26 +127,28 @@ else:
 
 # --- 4. MAIN APP LOGIC (Only runs if Logged In) ---
 if st.session_state.get("authentication_status") is False:
-    # We don't need to do anything here, the login form shows the error automatically
     pass
 elif st.session_state.get("authentication_status") is None:
     pass
 
 elif st.session_state.get("authentication_status") is True:
+    
+    # --- ACTIVATE THE MIDNIGHT THEME ---
+    load_glass_theme()
+
     # =========================================================
     #  LOGGED IN AREA
     # =========================================================
     
     # Get user details
-    username = st.session_state["username"] # Your Handle (e.g., CyberPro)
-    name = st.session_state["name"]         # Your Real Name (e.g., Oluwadamilola)
+    username = st.session_state["username"]
+    name = st.session_state["name"]
     
     # --- SIDEBAR ---
     with st.sidebar:
         st.image("https://img.icons8.com/fluency/96/hacker.png", width=70)
         st.title("Project Sentinel")
         
-        # FIX 1: Display USERNAME instead of Name
         st.caption(f"Operator: {username}") 
         
         authenticator.logout(location='sidebar')
@@ -84,8 +164,6 @@ elif st.session_state.get("authentication_status") is True:
     # --- A. DASHBOARD ---
     if menu == "Dashboard":
         st.title("🛡️ Command Center")
-        
-        # FIX 2: Display USERNAME instead of Name
         st.markdown(f"### Welcome back, **{username}**")
         
         col1, col2, col3, col4 = st.columns(4)

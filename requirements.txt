@@ -1,0 +1,6 @@
+streamlit
+streamlit-authenticator
+PyYAML
+python-nmap
+boto3
+requests
